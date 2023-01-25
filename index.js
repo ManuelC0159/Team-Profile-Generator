@@ -4,6 +4,8 @@ const fs = require('fs');
 const Manager = require('./lib/manager');
 const Employee = require('./lib/employee');
 const makeHTML = require('./src/makeHTML');
+const Engineer = require('./lib/engineer');
+const Inter = require('./lib/intern');
 
 const team = [];
 
@@ -29,7 +31,7 @@ const addManager =() =>{
             message: 'Enter ID',
             validate: nameInput =>{
                 if(isNaN(nameInput)){
-                    console.log("EEnter the ID")
+                    console.log("Enter the ID")
                 }
                 else{
                     return true;
@@ -82,7 +84,7 @@ const addEmployee =() =>{
         {
             type: 'list',
             name: 'role',
-            message: ['Engineer', 'Intern']
+            choices: ['Engineer', 'Intern']
         },
         {
             type: 'input',
@@ -131,13 +133,13 @@ const addEmployee =() =>{
             type: 'input',
             name: 'github',
             message: 'Enter github username',
-            when: (input) => input.role === "Engineer",
+            when: (input)=>input.role === "Engineer",
             validate: nameInput =>{
                 if(nameInput){
                     return true;
                 }
                 else{
-                    console.log("Enter github username");
+                    console.log("failed Enter github username");
                     return false;
                 }
             }
@@ -146,7 +148,7 @@ const addEmployee =() =>{
             type: 'input',
             name: 'school',
             message: 'Enter school name',
-            when: (input) => input.roel === "Intern",
+            when(input){input.role === "Intern"},
             validate: nameInput =>{
                 if(nameInput){
                     return true;
@@ -165,7 +167,7 @@ const addEmployee =() =>{
         }
     ])
     .then(data =>{
-            let { name,id,email,github,school,confirm } = data;
+            let { name,id,email,role,github,school,confirm } = data;
             let employee;
 
             if(role === "Engineer"){
@@ -186,7 +188,7 @@ const addEmployee =() =>{
 };
 
 const writeFile = data =>{
-    fs.writeFiel('./dist/index.html',data,err =>{
+    fs.writeFile('./dist/index.html',data,err =>{
         if(err){
             console.log(err);
         }
