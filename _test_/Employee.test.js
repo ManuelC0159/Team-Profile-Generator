@@ -3,8 +3,8 @@ test('employee', () =>{
     const employee =new Employee('Manny', 23354, 'manny@gmail.com');
 
     expect(employee.name).toEqual(expect.any(String));
-    expect(employee.id).toEqual(expecet.any(Number));
-    expect(employee.email).toEqual(expecet.any(String));
+    expect(employee.id).toEqual(expect.any(Number));
+    expect(employee.email).toEqual(expect.any(String));
 })
 
 test('employee name', () =>{

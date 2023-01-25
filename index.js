@@ -3,9 +3,9 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const Manager = require('./lib/manager');
 const Employee = require('./lib/employee');
-const makeHTML = require('./src/makeHTML');
+const generateHTML = require('./src/generateHTML');
 const Engineer = require('./lib/engineer');
-const Inter = require('./lib/intern');
+const Intern = require('./lib/intern');
 
 const team = [];
 
@@ -148,7 +148,7 @@ const addEmployee =() =>{
             type: 'input',
             name: 'school',
             message: 'Enter school name',
-            when(input){input.role === "Intern"},
+            when: (input)=>input.role === "Intern",
             validate: nameInput =>{
                 if(nameInput){
                     return true;
@@ -178,6 +178,7 @@ const addEmployee =() =>{
                 employee = new Intern(name,id,email,school);
                 console.log(employee);
             }
+            team.push(employee);
             if(confirm){
                 return addEmployee(team);
             }
@@ -201,7 +202,7 @@ const writeFile = data =>{
 addManager()
     .then(addEmployee)
     .then(team =>{
-        return makeHTML(team);
+        return generateHTML(team);
     })
     .then(pageHTML =>{
         return writeFile(pageHTML);
